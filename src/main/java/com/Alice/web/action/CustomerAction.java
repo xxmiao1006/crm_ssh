@@ -76,8 +76,5 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
         return "page";
     }
 
-    public void testgit(){
-        
-    }
     
 }
