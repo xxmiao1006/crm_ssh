@@ -4,12 +4,17 @@ import com.Alice.domain.Customer;
 import com.Alice.domain.Dict;
 import com.Alice.domain.PageBean;
 import com.Alice.service.CustomerService;
+import com.Alice.utils.UploadUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+
+import java.io.File;
+import java.io.IOException;
 
 public class CustomerAction extends ActionSupport implements ModelDriven<Customer> {
     private Customer customer = new Customer();
@@ -76,5 +81,78 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
         return "page";
     }
 
+    /**
+     * 跳转到添加页面
+     * @return
+     */
+    public String initAddUI(){
+        return "initAddUI";
+    }
+
+    /**
+     * 文件的上传，需要在Action类中定义成员属性 命名有规则
+     * private File upload(和表单name相同)
+     * private String uploadFileName(表单名+上传文件的名称)
+     * private String uploadContentType (表单名+上传文件的MIME类型)
+     * 提供set方法，拦截器就注入值了
+     */
+    private File upload;
+    private String uploadFileName;
+    private String uploadContType;
+    public void setUpload(File upload) {
+        this.upload = upload;
+    }
+    public void setUploadFileName(String uploadFileName) {
+        this.uploadFileName = uploadFileName;
+    }
+    public void setUploadContType(String uploadContType) {
+        this.uploadContType = uploadContType;
+    }
+
+    /**
+     * 保存客户的方法
+     * @return
+     */
+    public String save(){
+        //做文件上传
+        if (uploadFileName != null) {
+            //处理文件名称
+            try {
+                String filename = UploadUtils.getUUIDName(uploadFileName);
+                String path = "D:\\Alice\\work\\idea-workspace\\crm_ssh\\src\\main\\resources\\upload\\";
+                File file = new File(path+filename);
+                FileUtils.copyFile(upload,file);
+                customer.setFilepath(path+filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //调用service
+        customerService.save(customer);
+        return "save";
+    }
+
+
+    /**
+     * 删除用户的方法
+     * @return
+     */
+    public String delete(){
+        //通过id查找到客户
+        customer = customerService.findById(customer.getCust_id());
+        //获取上传文件的路径
+        String filepath = customer.getFilepath();
+        //删除客户
+        customerService.delete(customer);
+
+        //删除文件
+        File file = new File(filepath);
+        if (file.exists()){
+            file.delete();
+        }
+
+        return "delete";
+    }
     
 }

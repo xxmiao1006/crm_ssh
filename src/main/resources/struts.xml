@@ -5,6 +5,9 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+    <!--上传文件的最大 20M-->
+    <constant name="struts.multipart.maxSize" value="20971520"/>
+    
     <package name="crm" extends="struts-default" namespace="/">
         <!--配置全局的结果页面-->
         <global-results>
@@ -19,6 +22,14 @@
         <!-- 配置客户的模块 -->
         <action name="customer_*" class="customerAction" method="{1}">
             <result name="page">jsp/customer/list.jsp</result>
+            <result name="initAddUI">jsp/customer/add.jsp</result>
+            <result name="save" type="redirectAction">customer_findByPage</result>
+            <result name="input" >jsp/error.jsp</result>
+            <result name="delete" type="redirectAction">customer_findByPage</result>
+            <!--配置拦截器  只能上传txt,jpg-->
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.allowedExtensions">.jpg,.txt</param>
+            </interceptor-ref>
         </action>
 
         <!--配置字典的模块-->

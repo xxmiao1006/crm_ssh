@@ -26,6 +26,7 @@
 		<many-to-one name="source" class="com.Alice.domain.Dict" column="cust_source"/>
 		<many-to-one name="industry" class="com.Alice.domain.Dict" column="cust_industry"/>
 		<many-to-one name="level" class="com.Alice.domain.Dict" column="cust_level"/>
+		<property name="filepath" column="filepath"/>
 		
 	</class>
 	

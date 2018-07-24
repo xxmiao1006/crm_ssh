@@ -36,4 +36,29 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao{
         page.setBeanList(beanList);
         return page;
     }
+
+    /**
+     * 保存客户
+     * @param customer
+     */
+    public void save(Customer customer) {
+        this.getHibernateTemplate().save(customer);
+    }
+
+    /**
+     * 通过id查找客户
+     * @param cust_id
+     * @return
+     */
+    public Customer findById(Long cust_id) {
+        return this.getHibernateTemplate().get(Customer.class,cust_id);
+    }
+
+    /**
+     * 删除客户
+     * @param customer
+     */
+    public void delete(Customer customer) {
+        this.getHibernateTemplate().delete(customer);
+    }
 }

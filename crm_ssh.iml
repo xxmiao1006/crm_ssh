@@ -9,7 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots />
       </configuration>
       <facet type="Struts2" name="Struts 2">
         <configuration>
