@@ -26,6 +26,8 @@
             <result name="save" type="redirectAction">customer_findByPage</result>
             <result name="input" >jsp/error.jsp</result>
             <result name="delete" type="redirectAction">customer_findByPage</result>
+            <result name="initUpdate" >jsp/customer/edit.jsp</result>
+            <result name="update" type="redirectAction">customer_findByPage</result>
             <!--配置拦截器  只能上传txt,jpg-->
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.allowedExtensions">.jpg,.txt</param>
@@ -35,6 +37,11 @@
         <!--配置字典的模块-->
         <action name="dict_*" class="dictAction" method="{1}">
 
+        </action>
+
+        <!--配置联系人模块-->
+        <action name="linkman_*" class="linkmanAction" method="{1}">
+            <result name="page">jsp/linkman/list.jsp</result>
         </action>
     </package>
 </struts>

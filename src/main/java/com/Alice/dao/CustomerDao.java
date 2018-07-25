@@ -1,15 +1,15 @@
 package com.Alice.dao;
 
 import com.Alice.domain.Customer;
-import com.Alice.domain.PageBean;
-import org.hibernate.criterion.DetachedCriteria;
 
-public interface CustomerDao {
-    PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria);
+public interface CustomerDao extends BaseDao<Customer>{
+    //PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria);
 
-    void save(Customer customer);
+    //void save(Customer customer);
 
-    Customer findById(Long cust_id);
+    //Customer findById(Long cust_id);
 
-    void delete(Customer customer);
+    //void delete(Customer customer);
+
+    //void update(Customer customer);
 }

@@ -6,6 +6,8 @@ import com.Alice.domain.PageBean;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 客户的业务层
  */
@@ -50,5 +52,18 @@ public class CustomerServiceImpl implements CustomerService{
      */
     public void delete(Customer customer) {
         customerDao.delete(customer);
+    }
+
+    /**
+     * 更新客户的方法
+     * @param customer
+     */
+    public void update(Customer customer) {
+        customerDao.update(customer);
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return customerDao.findAll();
     }
 }

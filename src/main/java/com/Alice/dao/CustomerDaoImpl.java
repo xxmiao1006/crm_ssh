@@ -1,14 +1,9 @@
 package com.Alice.dao;
 
 import com.Alice.domain.Customer;
-import com.Alice.domain.PageBean;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import java.util.List;
+public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDao{
 
-public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao{
 
     /**
      * 分页查询
@@ -17,7 +12,7 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao{
      * @param criteria
      * @return
      */
-    public PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria) {
+    /*public PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria) {
         PageBean<Customer> page = new PageBean<>();
         page.setPageCode(pageCode);
         page.setPageSize(pageSize);
@@ -35,30 +30,35 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao{
         //分页查数据
         page.setBeanList(beanList);
         return page;
-    }
+    }*/
 
     /**
      * 保存客户
      * @param customer
      */
-    public void save(Customer customer) {
+   /* public void save(Customer customer) {
         this.getHibernateTemplate().save(customer);
-    }
+    }*/
 
     /**
      * 通过id查找客户
      * @param cust_id
      * @return
      */
-    public Customer findById(Long cust_id) {
+    /*public Customer findById(Long cust_id) {
         return this.getHibernateTemplate().get(Customer.class,cust_id);
     }
-
+*/
     /**
      * 删除客户
      * @param customer
      */
-    public void delete(Customer customer) {
+    /*public void delete(Customer customer) {
         this.getHibernateTemplate().delete(customer);
     }
+
+    @Override
+    public void update(Customer customer) {
+        this.getHibernateTemplate().update(customer);
+    }*/
 }

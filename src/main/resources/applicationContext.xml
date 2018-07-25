@@ -41,6 +41,7 @@
 				<value>hibconf/Customer.hbm.xml</value>
 				<value>hibconf/Dict.hbm.xml</value>
 				<value>hibconf/User.hbm.xml</value>
+				<value>hibconf/Linkman.hbm.xml</value>
 			</list> 
 		</property>
 	</bean>
@@ -92,6 +93,18 @@
 	<bean id="dictDao" class="com.Alice.dao.DictDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+
+	<!--联系人的Action-->
+	<bean id="linkmanAction" class="com.Alice.web.action.LinkmanAction" scope="prototype">
+		<property name="linkmanService" ref="linkmanService"/>
+	</bean>
+	<bean id="linkmanService" class="com.Alice.service.LinkmanServiceImpl">
+		<property name="linkmanDao" ref="linkmanDao"/>
+	</bean>
+	<bean id="linkmanDao" class="com.Alice.dao.LinkmanDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
 	
 	
 	

@@ -4,19 +4,20 @@ import com.Alice.domain.Customer;
 import com.Alice.domain.Dict;
 import com.Alice.domain.PageBean;
 import com.Alice.service.CustomerService;
+import com.Alice.utils.FastJsonUtil;
 import com.Alice.utils.UploadUtils;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
-public class CustomerAction extends ActionSupport implements ModelDriven<Customer> {
+public class CustomerAction extends BaseAction implements ModelDriven<Customer> {
     private Customer customer = new Customer();
     public Customer getModel() {
         return customer;
@@ -28,22 +29,7 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
         this.customerService = customerService;
     }
 
-    //属性驱动的方式
-    //当前页
-    private Integer pageCode=1;
-    public void setPageCode(Integer pageCode) {
-        if(pageCode==null){
-            pageCode=1;
-        }
-        this.pageCode = pageCode;
-    }
 
-    //每显示的数据条数
-    private Integer pageSize = 2;
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-    
     /**
      * 分页查询的方法
      * @return
@@ -73,11 +59,9 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
         }
 
         // 查询
-        PageBean<Customer> page = customerService.findByPage(pageCode,pageSize,criteria);
-        // 压栈
-        ValueStack vs = ActionContext.getContext().getValueStack();
+        PageBean<Customer> page = customerService.findByPage(this.getPageCode(),this.getPageSize(),criteria);
         // 栈顶是map<"page",page对象>
-        vs.set("page", page);
+        this.set("page", page);
         return "page";
     }
 
@@ -147,12 +131,67 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
         customerService.delete(customer);
 
         //删除文件
-        File file = new File(filepath);
-        if (file.exists()){
-            file.delete();
+        if(filepath!=null){
+            File file = new File(filepath);
+            if (file.exists()){
+                file.delete();
+            }
         }
 
         return "delete";
+    }
+
+    /**
+     * 跳转到修改的界面
+     * @return
+     */
+    public String initUpdate(){
+        //通过id查找到客户
+        customer = customerService.findById(customer.getCust_id());
+        //默认customer压栈
+        return "initUpdate";
+    }
+
+    /**
+     * 修改客户的功能
+     * @return
+     */
+    public String update(){
+        //判断
+        if (uploadFileName != null) {
+            //说明用户上传了新的图片
+            //先删除旧图片
+            String oldFilepath = customer.getFilepath();
+            if (oldFilepath != null && !oldFilepath.trim().isEmpty()) {
+                File file = new File(oldFilepath);
+                file.delete();
+            }
+            //上传新图片
+            //先处理文件的名称问题
+            try {
+                String filename = UploadUtils.getUUIDName(uploadFileName);
+                String path = "D:\\Alice\\work\\idea-workspace\\crm_ssh\\src\\main\\resources\\upload\\";
+                File file = new File(path+filename);
+                customer.setFilepath(path+filename);
+                FileUtils.copyFile(upload,file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //更新客户新图片的路径
+        }
+
+        //更新客户信息
+        customerService.update(customer);
+        return "update";
+    }
+
+    public String findAll(){
+        List<Customer> list = customerService.findAll();
+        String jsonString = FastJsonUtil.toJSONString(list);
+        HttpServletResponse response = ServletActionContext.getResponse();
+        FastJsonUtil.write_json(response,jsonString);
+        return NONE;
     }
     
 }

@@ -1,5 +1,10 @@
 package com.Alice.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class Customer {
 
     /**
@@ -35,13 +40,24 @@ public class Customer {
     // 一客户级别 多是客户
     private Dict level;
 
+    @JSONField(serialize = false)
+    private Set<Linkman> linkmans = new HashSet<Linkman>();
 
+
+    public Set<Linkman> getLinkmans() {
+        return linkmans;
+    }
+    public void setLinkmans(Set<Linkman> linkmans) {
+        this.linkmans = linkmans;
+    }
     //上传文件保存的路径
+
     private String filepath;
 
     public String getFilepath() {
         return filepath;
     }
+
     public void setFilepath(String filepath) {
         this.filepath = filepath;
     }
