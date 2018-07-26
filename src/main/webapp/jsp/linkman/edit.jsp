@@ -12,12 +12,31 @@
 
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
+	<SCRIPT type="text/javascript">
+        $(function () {
+            //发送ajax请求
+            var url = "${ pageContext.request.contextPath }/customer_findAll.action"
+            $.post(url,function (data) {
+                $(data).each(function (i,n) {
+                    //先获取值栈中的值，使用el表达式
+					var cust_id = "${model.customer.cust_id}"
+					if(cust_id==n.cust_id){
+                        $("#custId").append("<option value='"+this.cust_id+"' selected>"+this.cust_name+"</option>")
+
+                    }else {
+                        $("#custId").append("<option value='"+this.cust_id+"'>"+this.cust_name+"</option>")
+                    }
+                });
+            },"json");
+        });
+
+	</SCRIPT>
 </HEAD>
 <BODY>
 	<FORM id=form1 name=form1
-		action="${pageContext.request.contextPath }/linkmanServlet?method=editsubmit"
-		method=post>
-		<input type="hidden" name="lkmId" value="${linkman.lkmId }"/>
+		action="${pageContext.request.contextPath }/linkman_update.action" method=post>
+		<input type="hidden" name="lkm_id" value="${model.lkm_id }"/>
 
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
@@ -48,31 +67,31 @@
 						<TABLE cellSpacing=0 cellPadding=5  border=0>
 							<tr>
 								<td>所属客户：</td>
-								<td colspan="3"><input type="text" name="custId" style="WIDTH: 180px" value="${linkman.cstCustomer.custId}" /></td>
+								<td colspan="3"><select name="customer.cust_id" id="custId"></select></td>
 							</tr>
 							<TR>
 								<td>联系人名称：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="lkmName" value="${linkman.lkmName}" >
+														style="WIDTH: 180px" maxLength=50 name="lkm_name" value="${model.lkm_name}" >
 								</td>
 								<td>联系人性别：</td>
 								<td>
-								<input type="radio" value="1" name="lkmGender" <c:if test="${linkman.lkmGender=='1' }">checked</c:if>>男
+								<input type="radio" value="男" name="lkm_gender" <c:if test="${model.lkm_gender=='男' }">checked</c:if>>男
 								
-								<input type="radio" value="2" name="lkmGender" <c:if test="${linkman.lkmGender=='2' }">checked</c:if>>女
+								<input type="radio" value="女" name="lkm_gender" <c:if test="${model.lkm_gender=='女' }">checked</c:if>>女
 								</td>
 							</TR>
 							<TR>
 								<td>联系人办公电话 ：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="lkmPhone" value="${linkman.lkmPhone}">
+														style="WIDTH: 180px" maxLength=50 name="lkm_phone" value="${model.lkm_phone}">
 								</td>
 								<td>联系人手机 ：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="lkmMobile" value="${linkman.lkmMobile}">
+														style="WIDTH: 180px" maxLength=50 name="lkm_mobile" value="${model.lkm_mobile}">
 								</td>
 							</TR>
 							<tr>

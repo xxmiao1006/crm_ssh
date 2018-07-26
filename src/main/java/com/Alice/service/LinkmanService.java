@@ -10,4 +10,12 @@ import org.hibernate.criterion.DetachedCriteria;
  */
 public interface LinkmanService {
     PageBean<Linkman> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria);
+
+    void add(Linkman linkman);
+
+    Linkman findById(Long id);
+
+    void update(Linkman linkman);
+
+    void delete(Linkman linkman);
 }

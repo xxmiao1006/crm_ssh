@@ -116,9 +116,9 @@
 													<TD>${linkman.lkm_mobile }</TD>
 													
 													<TD>
-													<a href="${pageContext.request.contextPath }/linkmanServlet?method=edit&lkmId=${linkman.lkm_id}">修改</a>
+													<a href="${pageContext.request.contextPath }/linkman_editUI?lkm_id=${linkman.lkm_id}">修改</a>
 													&nbsp;&nbsp;
-													<a href="${pageContext.request.contextPath }/linkmanServlet?method=delete&lkmId=${linkman.lkm_id}">删除</a>
+													<a href="${pageContext.request.contextPath }/linkman_delete?lkm_id=${linkman.lkm_id}" onclick="return window.confirm('确定要删除吗？')">删除</a>
 													</TD>
 												</TR>
 												

@@ -12,6 +12,9 @@
 	http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!--开启注解的扫描-->
+	<context:component-scan base-package="com.Alice"/>
 	
 	<!-- 先配置C3P0的连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -42,6 +45,7 @@
 				<value>hibconf/Dict.hbm.xml</value>
 				<value>hibconf/User.hbm.xml</value>
 				<value>hibconf/Linkman.hbm.xml</value>
+				<value>hibconf/Visit.hbm.xml</value>
 			</list> 
 		</property>
 	</bean>

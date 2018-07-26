@@ -2,7 +2,11 @@ package com.Alice.dao;
 
 import com.Alice.domain.Customer;
 
+import java.util.List;
+
 public interface CustomerDao extends BaseDao<Customer>{
+
+    List<Object[]> findBySource();
     //PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria);
 
     //void save(Customer customer);

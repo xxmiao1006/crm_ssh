@@ -186,12 +186,26 @@ public class CustomerAction extends BaseAction implements ModelDriven<Customer> 
         return "update";
     }
 
+    /**
+     * 异步请求所有客户
+     * @return
+     */
     public String findAll(){
         List<Customer> list = customerService.findAll();
         String jsonString = FastJsonUtil.toJSONString(list);
         HttpServletResponse response = ServletActionContext.getResponse();
         FastJsonUtil.write_json(response,jsonString);
         return NONE;
+    }
+
+    /**
+     * 统计分析客户来源
+     * @return
+     */
+    public String findBySource(){
+        List<Object[]> list = customerService.findBySource();
+        this.set("list",list);
+        return "sources";
     }
     
 }

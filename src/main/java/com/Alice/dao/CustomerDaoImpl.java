@@ -2,7 +2,15 @@ package com.Alice.dao;
 
 import com.Alice.domain.Customer;
 
+import java.util.List;
+
 public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDao{
+    @Override
+    public List<Object[]> findBySource() {
+        String hql = "select c.source.dict_item_name,count(*) from Customer c inner join c.source group by c.source";
+        // 查询
+        return (List<Object[]>) this.getHibernateTemplate().find(hql);
+    }
 
 
     /**

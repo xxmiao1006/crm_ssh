@@ -23,4 +23,31 @@ public class LinkmanServiceImpl implements LinkmanService{
         return (PageBean<Linkman>) linkmanDao.findByPage(pageCode,pageSize,criteria);
 
     }
+
+    /**
+     * 添加联系人
+     * @param linkman
+     */
+    public void add(Linkman linkman) {
+        linkmanDao.save(linkman);
+    }
+
+    /**
+     * 通过id查找联系人
+     * @param id
+     * @return
+     */
+    public Linkman findById(Long id) {
+        return linkmanDao.findById(id);
+    }
+
+    @Override
+    public void update(Linkman linkman) {
+        linkmanDao.update(linkman);
+    }
+
+    @Override
+    public void delete(Linkman linkman) {
+        linkmanDao.delete(linkman);
+    }
 }

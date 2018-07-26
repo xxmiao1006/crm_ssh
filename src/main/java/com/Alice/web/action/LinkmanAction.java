@@ -23,6 +23,10 @@ public class LinkmanAction extends BaseAction implements ModelDriven<Linkman> {
         this.linkmanService = linkmanService;
     }
 
+    /**
+     * 分页查询所有联系人
+     * @return
+     */
     public String findByPage(){
         //获得离线查询对象
         DetachedCriteria criteria = DetachedCriteria.forClass(Linkman.class);
@@ -42,4 +46,46 @@ public class LinkmanAction extends BaseAction implements ModelDriven<Linkman> {
         this.set("page",page);
         return "page";
     }
+
+    /**
+     * 跳转到添加页面
+     * @return
+     */
+    public String addUI(){
+        return "addUI";
+    }
+
+    /**
+     * 添加
+     * @return
+     */
+    public String add(){
+        linkmanService.add(linkman);
+        return "add";
+    }
+
+    /**
+     * 跳转到修改页面
+     * @return
+     */
+    public String editUI(){
+        //调用service查询到联系人
+        linkman =  linkmanService.findById(linkman.getLkm_id());
+        return "editUI";
+    }
+
+    /**
+     * 修改联系人
+     * @return
+     */
+    public String update(){
+        linkmanService.update(linkman);
+        return "update";
+    }
+
+    public String delete(){
+        linkmanService.delete(linkman);
+        return "delete";
+    }
+
 }

@@ -78,11 +78,7 @@
 										<TABLE cellSpacing=0 cellPadding=2 border=0>
 											<TBODY>
 												<TR>
-													<TD>联系人名称：</TD>
-													<TD>
-														<INPUT class=textbox id=sChannel2 style="WIDTH: 80px" maxLength=50 name="lkm_name">
-													</TD>
-													
+
 													<TD>选择日期：</TD>
 													<TD>
 														<INPUT class=textbox id="beginDate" style="WIDTH: 80px" maxLength=50 name="beginDate">
